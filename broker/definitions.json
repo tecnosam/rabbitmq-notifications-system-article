@@ -1,0 +1,84 @@
+{
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+    "users":[
+        {
+        "name": "username",
+        "password_hash": "59mJTHSyLBCFmcIY+5G08beBzOCNXumrgDsxiGq3lfkqvvnt",
+        "hashing_algorithm": "rabbit_password_hashing_sha256",
+        "tags": "administrator"
+        }
+    ],
+  "exchanges": [
+    {
+      "name": "notifications-exchange",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "email-queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "sms-queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "push-queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "notifications-exchange",
+      "vhost": "/",
+      "destination": "email-queue",
+      "destination_type": "queue",
+      "routing_key": "email",
+      "arguments": {}
+    },
+    {
+      "source": "notifications-exchange",
+      "vhost": "/",
+      "destination": "sms-queue",
+      "destination_type": "queue",
+      "routing_key": "sms",
+      "arguments": {}
+    },
+    {
+      "source": "notifications-exchange",
+      "vhost": "/",
+      "destination": "push-queue",
+      "destination_type": "queue",
+      "routing_key": "push",
+      "arguments": {}
+    }
+  ],
+  "permissions": [
+    {
+      "user": "username",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ]
+}
